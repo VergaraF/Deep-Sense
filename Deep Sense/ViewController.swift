@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+<<<<<<< HEAD
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var cameraView: UIView!
@@ -162,6 +163,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
+=======
+class ViewController: UIViewController, UIImagePickerControllerDelegate {
+
+    @IBOutlet var cameraView: UIView!
+    
+    var captureSession: AVCaptureSession?
+    var stillImageOutput   : AVCaptureStillImageOutput?
+    var previewLayer  : AVCaptureVideoPreviewLayer?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -169,6 +185,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+<<<<<<< HEAD
         captureLayer?.frame = cameraView.bounds
     }
     
@@ -176,6 +193,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         /*let backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+=======
+        previewLayer?.frame = cameraView.bounds
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        captureSession = AVCaptureSession()
+        captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
+        
+        var backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
         
         // var error : NSError?
         var input: AVCaptureDeviceInput?
@@ -194,7 +223,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                 previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
+<<<<<<< HEAD
                 cameraView.layer.insertSublayer(previewLayer!, at: 0)
+=======
+                cameraView.layer.addSublayer(previewLayer!)
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
                 captureSession?.startRunning()
             }
             
@@ -202,6 +235,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
         } catch let error {
             print(error)
+<<<<<<< HEAD
         }*/
         
     }
@@ -262,6 +296,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //        print(AVAudioSession.sharedInstance().category)
         //        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
         //        print(AVAudioSession.sharedInstance().category)
+=======
+        }
+        
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
     }
 
 }
