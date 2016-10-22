@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+=======
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -18,6 +23,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
+                            <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gde-vK-HHX">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Ofv-4e-nil"/>
+                                    <constraint firstAttribute="width" constant="50" id="sYf-hR-UKr"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="flip.png"/>
+                            </button>
+                            <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CF5-EL-n1F">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="UEz-Kq-s98"/>
+                                    <constraint firstAttribute="width" constant="50" id="m97-j8-DTB"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="gallery.png"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="gde-vK-HHX" secondAttribute="bottom" constant="8" id="UtH-Xf-nxv"/>
+                            <constraint firstAttribute="trailing" secondItem="gde-vK-HHX" secondAttribute="trailing" constant="16" id="pwL-F6-4Ja"/>
+                            <constraint firstItem="CF5-EL-n1F" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="wu0-zx-W7J"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="CF5-EL-n1F" secondAttribute="bottom" constant="8" id="xOy-EQ-Ryz"/>
+                        </constraints>
+=======
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5cH-qG-YF0">
                                 <frame key="frameInset" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -25,6 +56,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -32,4 +64,11 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+<<<<<<< HEAD
+    <resources>
+        <image name="flip.png" width="200" height="200"/>
+        <image name="gallery.png" width="200" height="200"/>
+    </resources>
+=======
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
 </document>

@@ -51,6 +51,11 @@
 		D8D3AC2B1DBB126700BC2F01 /* smile_people.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D3AC2A1DBB126700BC2F01 /* smile_people.jpg */; };
 		D8D3AC2D1DBB1B7300BC2F01 /* FEAR.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D3AC2C1DBB1B7300BC2F01 /* FEAR.jpg */; };
 		D8D3AC2F1DBB1BEB00BC2F01 /* fear_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D3AC2E1DBB1BEB00BC2F01 /* fear_6.jpg */; };
+		FBB8CA7E1DBB1610004889A8 /* flip.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB8CA7C1DBB1610004889A8 /* flip.png */; };
+		FBB8CA7F1DBB1610004889A8 /* gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB8CA7D1DBB1610004889A8 /* gallery.png */; };
+		FBB8CA821DBB390F004889A8 /* cleartxtbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB8CA811DBB390F004889A8 /* cleartxtbtn.png */; };
+		FBBC7ECC1DBBE07100CEEAEE /* openit.png in Resources */ = {isa = PBXBuildFile; fileRef = FBBC7ECB1DBBE07100CEEAEE /* openit.png */; };
+		FBBC7ECE1DBBE94B00CEEAEE /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC7ECD1DBBE94B00CEEAEE /* PreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +108,11 @@
 		D8D3AC2C1DBB1B7300BC2F01 /* FEAR.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FEAR.jpg; sourceTree = "<group>"; };
 		D8D3AC2E1DBB1BEB00BC2F01 /* fear_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fear_6.jpg; sourceTree = "<group>"; };
 		E341583F94B11837A5489D08 /* Pods-Deep Sense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deep Sense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Deep Sense/Pods-Deep Sense.debug.xcconfig"; sourceTree = "<group>"; };
+		FBB8CA7C1DBB1610004889A8 /* flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flip.png; sourceTree = "<group>"; };
+		FBB8CA7D1DBB1610004889A8 /* gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gallery.png; sourceTree = "<group>"; };
+		FBB8CA811DBB390F004889A8 /* cleartxtbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cleartxtbtn.png; sourceTree = "<group>"; };
+		FBBC7ECB1DBBE07100CEEAEE /* openit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = openit.png; sourceTree = "<group>"; };
+		FBBC7ECD1DBBE94B00CEEAEE /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,10 +190,12 @@
 				D8A270C11DBB090200BD8DCC /* SDK */,
 				D88D527B1DBAED8400ED0974 /* AppDelegate.swift */,
 				D88D527D1DBAED8400ED0974 /* ViewController.swift */,
+				FBBC7ECD1DBBE94B00CEEAEE /* PreviewViewController.swift */,
 				D88D527F1DBAED8400ED0974 /* Main.storyboard */,
 				D88D52821DBAED8400ED0974 /* Assets.xcassets */,
 				D88D52841DBAED8400ED0974 /* LaunchScreen.storyboard */,
 				D88D52871DBAED8400ED0974 /* Info.plist */,
+				FBB8CA801DBB172D004889A8 /* images */,
 			);
 			path = "Deep Sense";
 			sourceTree = "<group>";
@@ -243,6 +255,17 @@
 				581E10EBEFAFD14C3B583A20 /* Pods_Deep_Sense.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FBB8CA801DBB172D004889A8 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC7ECB1DBBE07100CEEAEE /* openit.png */,
+				FBB8CA811DBB390F004889A8 /* cleartxtbtn.png */,
+				FBB8CA7C1DBB1610004889A8 /* flip.png */,
+				FBB8CA7D1DBB1610004889A8 /* gallery.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +338,11 @@
 				D85254801DBB5D3300E2684D /* john.mid in Resources */,
 				D8D3AC2D1DBB1B7300BC2F01 /* FEAR.jpg in Resources */,
 				D88D52831DBAED8400ED0974 /* Assets.xcassets in Resources */,
+				FBBC7ECC1DBBE07100CEEAEE /* openit.png in Resources */,
+				FBB8CA7F1DBB1610004889A8 /* gallery.png in Resources */,
+				FBB8CA7E1DBB1610004889A8 /* flip.png in Resources */,
+				D88D52811DBAED8400ED0974 /* Main.storyboard in Resources */,
+				FBB8CA821DBB390F004889A8 /* cleartxtbtn.png in Resources */,
 				D88D52811DBAED8400ED0974 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +437,7 @@
 				D86376021DBB9DD400FC6178 /* SocketIOClientOption.swift in Sources */,
 				D88D527C1DBAED8400ED0974 /* AppDelegate.swift in Sources */,
 				D863760B1DBB9DD400FC6178 /* WebSocket.swift in Sources */,
+				FBBC7ECE1DBBE94B00CEEAEE /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

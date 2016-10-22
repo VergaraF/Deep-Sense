@@ -27,6 +27,24 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+<<<<<<< HEAD
+	<key>NSCameraUsageDescription</key>
+	<string>to take pictures</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>save images</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>load images</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+=======
+>>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
