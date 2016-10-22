@@ -9,17 +9,40 @@
 import UIKit
 import AVFoundation
 
+var emotionData = [String]()
+
 class ViewController: UIViewController, UIImagePickerControllerDelegate {
 
+    @IBOutlet var picture: UIImageView!
     @IBOutlet var cameraView: UIView!
     
     var captureSession: AVCaptureSession?
     var stillImageOutput   : AVCaptureStillImageOutput?
     var previewLayer  : AVCaptureVideoPreviewLayer?
     
+    let cognitiveServices = CognitiveServices.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        recognizePicture()
+    }
+    
+    func recognizePicture(){
+        let analyzeImage = CognitiveServices.sharedInstance.analyzeImage
+        
+        let visualFeatures: [AnalyzeImage.AnalyzeImageVisualFeatures] = [.Categories, .Description, .Faces, .ImageType, .Color, .Adult]
+        let requestObject: AnalyzeImageRequestObject = ( picture.image!, visualFeatures)
+        
+        try! analyzeImage.analyzeImageWithRequestObject(requestObject, completion: { (response) in
+            DispatchQueue.main.async(execute: {
+              //  self.textView.text = response?.descriptionText
+              //  print(response?.descriptionText)
+               // print(response?.categories)
+              //  print(response?.tags)
+            })
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,12 +52,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        previewLayer?.frame = cameraView.bounds
+        //previewLayer?.frame = cameraView.bounds
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+     /*
         captureSession = AVCaptureSession()
         captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
         
@@ -66,7 +89,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
         } catch let error {
             print(error)
         }
-        
+        */
     }
 
 }
