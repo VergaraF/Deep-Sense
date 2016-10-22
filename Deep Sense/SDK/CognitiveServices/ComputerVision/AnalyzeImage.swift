@@ -55,6 +55,8 @@ class AnalyzeImage: NSObject {
         // Faces
         var faces: [FaceObject]? = []
         
+        var emot : String?
+        
         // Metadata
         var rawMetaData: [String : AnyObject]?
         var imageSize: CGSize?
@@ -234,6 +236,11 @@ class AnalyzeImage: NSObject {
             } else {
                 
                 let results = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:AnyObject]
+                
+              
+                    
+                
+            
                 let analyzeObject = self.objectFromDict(results, data: imageData)
                 
                 let interval = Date().timeIntervalSince(started)
@@ -241,7 +248,7 @@ class AnalyzeImage: NSObject {
                 
                 // Hand dict over
                 DispatchQueue.main.async {
-                    completion(analyzeObject)
+                   completion(analyzeObject)
                 }
             }
             
@@ -259,13 +266,16 @@ class AnalyzeImage: NSObject {
         
         if let categories = dict?["categories"] as? [[String : AnyObject]] {
             analyzeObject.categories = categories
+            //analyzeObject.emot = "trust"
         }
         
         var containsFaces = false
+        var finished = false
         if let faces = dict?["faces"] as? [[String : AnyObject]] {
             containsFaces = faces.count != 0
             
             if faces.count >= 1 {
+                
                 analyzeObject.getEmotions({ emotionFaces in
                     
                     faces.enumerated().forEach({ faceDict in
@@ -298,11 +308,17 @@ class AnalyzeImage: NSObject {
                                 $0.0
                         }
                         
-                       // print(sortedEmotions)
+                        print(sortedEmotions)
+                        if faces.count > 1{
+                            emotionData.append((sortedEmotions?.first)!)
+                        }else{
+                            for i in 0..<4{
+                                emotionData.append((sortedEmotions?[i])!)
+                            }
+                        }
+                        
                         
                         let primaryEmotion = sortedEmotions?.first
-                        emotionData.append(primaryEmotion)
-                        print("primary emotion : ")
                         print(primaryEmotion)
                         
                         let face = AnalyzeImageObject.FaceObject (
@@ -312,11 +328,25 @@ class AnalyzeImage: NSObject {
                             emotion: primaryEmotion
                         )
                         
+
                         analyzeObject.faces?.append(face)
+                        analyzeObject.emot = primaryEmotion
+                        //print(analyzeObject.emot)
+                        
+                       
+                        
+                       // emotionData.append(analyzeObject.emot!)
+
+                        
                     })
                     
-                    self.delegate?.finnishedGeneratingObject(analyzeObject)
+                    print("analyze object . emot")
                     
+                    // <---
+                    self.delegate?.finnishedGeneratingObject(analyzeObject)
+                  //  print(analyzeObject.emot)
+                    finished = true
+
                 })
             }
             
@@ -357,6 +387,10 @@ class AnalyzeImage: NSObject {
                 analyzeObject.rawDescriptionCaptions = captions
                 
                 analyzeObject.descriptionText = captions?["text"] as? String
+                
+                
+                //LOL
+               // analyzeObject.emot = "LOL"
             }
             
         }
@@ -372,9 +406,14 @@ class AnalyzeImage: NSObject {
         
         
         if containsFaces == false {
-            delegate?.finnishedGeneratingObject(analyzeObject)
+            //delegate?.finnishedGeneratingObject(analyzeObject)
         }
-        
+ 
+        if finished{
+            return analyzeObject
+        }
+
+        print(finished)
         return analyzeObject
         
     }
