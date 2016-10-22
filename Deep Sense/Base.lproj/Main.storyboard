@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="homeview" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="Deep_Sense" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dug-bd-BZr">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="P4o-vY-nGf"/>
+                                    <constraint firstAttribute="height" constant="50" id="d9E-j4-bqc"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="flip.png"/>
+                                <connections>
+                                    <action selector="flipCam:" destination="BYZ-38-t0r" eventType="touchDown" id="gW3-ht-FNo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwf-hJ-704">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="ntA-NA-wYm"/>
+                                    <constraint firstAttribute="height" constant="50" id="wls-Ob-WNu"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="gallery.png"/>
+                                <connections>
+                                    <action selector="galleryBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZEa-SV-nnR"/>
+                                </connections>
+                            </button>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9JA-H5-KfO">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kr9-3W-fhD">
+                                        <frame key="frameInset"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-iV-9xv">
+                                        <frame key="frameInset"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qW2-pZ-fiX">
+                                        <frame key="frameInset" minX="50.15%" width="50" height="50" maxY="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="openit.png"/>
+                                        <connections>
+                                            <action selector="scrollIt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wit-er-emy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M47-qr-WdC">
+                                        <frame key="frameInset" minX="8" minY="8" width="32" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="cleartxtbtn.png"/>
+                                        <connections>
+                                            <action selector="closeImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gte-kg-Wwp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9JA-H5-KfO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="09I-fm-SJb"/>
+                            <constraint firstAttribute="trailing" secondItem="dug-bd-BZr" secondAttribute="trailing" constant="16" id="4Mt-to-9Fn"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Qwf-hJ-704" secondAttribute="bottom" constant="8" id="6sh-ja-2Xg"/>
+                            <constraint firstItem="9JA-H5-KfO" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="KmV-vy-TA4"/>
+                            <constraint firstItem="9JA-H5-KfO" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="VGc-I2-fNG"/>
+                            <constraint firstItem="Qwf-hJ-704" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="awz-z9-cRm"/>
+                            <constraint firstItem="9JA-H5-KfO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="fJI-Ui-nju"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dug-bd-BZr" secondAttribute="bottom" constant="8" id="r4A-Ox-Fo8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="8bC-Xf-vdC" id="Glu-YA-64R"/>
+                        <outlet property="flipBtn" destination="dug-bd-BZr" id="JCL-Ld-mne"/>
+                        <outlet property="galleryBtn" destination="Qwf-hJ-704" id="Wbr-Rl-nhi"/>
+                        <outlet property="poemScroll" destination="G1G-iV-9xv" id="vFT-m4-gTz"/>
+                        <outlet property="prevImg" destination="Kr9-3W-fhD" id="ldk-67-ugX"/>
+                        <outlet property="prevView" destination="9JA-H5-KfO" id="F8z-N1-gMx"/>
+                        <outlet property="scrollBtn" destination="G1G-iV-9xv" id="BTQ-BF-JQs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="126.38680659670166"/>
+        </scene>
+        <!--Preview View Controller-->
+        <scene sceneID="WjV-3j-4cR">
+            <objects>
+                <viewController storyboardIdentifier="prevview" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cGr-m6-FRi" customClass="PreviewViewController" customModule="Deep_Sense" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M2B-fV-Bhf"/>
+                        <viewControllerLayoutGuide type="bottom" id="hSJ-wh-Z7W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DXe-dE-rhB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvm-z0-4dG">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mgq-gY-iiX">
+                                        <frame key="frameInset"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gpM-tg-nk9">
+                                        <frame key="frameInset"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1RP-D6-peC">
+                                        <frame key="frameInset" minX="50.15%" width="50" height="50" maxY="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="openit.png"/>
+                                        <connections>
+                                            <action selector="scrollIt:" destination="cGr-m6-FRi" eventType="touchUpInside" id="zbf-tx-Nvg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jiy-RG-xxZ">
+                                        <frame key="frameInset" minX="8" minY="8" width="32" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="cleartxtbtn.png"/>
+                                        <connections>
+                                            <action selector="closeImage:" destination="cGr-m6-FRi" eventType="touchUpInside" id="3Hs-dF-Iv2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="poemScroll" destination="gpM-tg-nk9" id="cod-JQ-WSd"/>
+                        <outlet property="prevImage" destination="Mgq-gY-iiX" id="yVE-4y-bue"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2d5-Bv-pbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="775" y="126"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cleartxtbtn.png" width="150" height="150"/>
+        <image name="flip.png" width="200" height="200"/>
+        <image name="gallery.png" width="200" height="200"/>
+        <image name="openit.png" width="240" height="240"/>
+    </resources>
+</document>
