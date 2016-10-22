@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Deep Sense/ViewController.swift"
+            timestampString = "498847756.653935"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Deep_Sense.ViewController.viewDidLoad () -&gt; ()"
+                  moduleName = "Deep Sense"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vergaraF/Desktop/Deep%20Sense/Deep%20Sense/ViewController.swift"
+                  timestampString = "498847811.899139"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "464">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Deep_Sense.ViewController.(viewDidLoad () -&gt; ()).(closure #1)"
+                  moduleName = "Deep Sense"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vergaraF/Desktop/Deep%20Sense/Deep%20Sense/ViewController.swift"
+                  timestampString = "498847811.903964"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
