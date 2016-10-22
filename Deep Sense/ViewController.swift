@@ -8,8 +8,13 @@
 
 import UIKit
 import AVFoundation
+import Alamofire
 
-<<<<<<< HEAD
+
+
+
+var emotionData = [String]()
+
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var cameraView: UIView!
@@ -34,8 +39,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let movieDataOutput = AVCaptureVideoDataOutput()
     var oneTap = UITapGestureRecognizer()
     //var doubleTap = UITapGestureRecognizer()
+    let cognitiveServices = CognitiveServices.sharedInstance
+    
+    var timer : Timer?
+    
+    var midiPlayer:AVMIDIPlayer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+ 		timer = Timer.scheduledTimer(timeInterval: 7, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
         addVideoCamera()
         poemLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2, y: self.view.frame.size.height, width: self.view.frame.size.width, height: self.view.frame.size.height))
         poemLabel.center = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height*1.5)
@@ -59,6 +71,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //doubleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.flipit))
         //doubleTap.numberOfTapsRequired = 2
         //self.view.addGestureRecognizer(doubleTap)
+
+
+        createAVMIDIPlayerFromMIDIFIleDLS()
+
+        recognizePicture()
+        
+        play()
     }
 
     
@@ -162,22 +181,106 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
         }
     }
-    
-=======
-class ViewController: UIViewController, UIImagePickerControllerDelegate {
 
-    @IBOutlet var cameraView: UIView!
     
-    var captureSession: AVCaptureSession?
-    var stillImageOutput   : AVCaptureStillImageOutput?
-    var previewLayer  : AVCaptureVideoPreviewLayer?
+    func createAVMIDIPlayerFromMIDIFIleDLS() {
+   /*     Alamofire.request("http://10.251.202.166:5000/song.mid").response { response in
+            print("Request: \(response.request)")
+            print("Response: \(response.response)")
+            print("Error: \(response.error)")
+            
+            print(response.data)
+            print("MIDI File")
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)")
+                
+                
+            }
+        }*/
+        //Get midi online
+        
+        
+
+        
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        guard let midiFileURL = Bundle.main.url(forResource: "john", withExtension: "mid") else {
+            fatalError("\"john.mid\" file not found.")
+        }
+        
+        guard let bankURL = Bundle.main.url(forResource: "gs_instruments", withExtension: "dls") else {
+            fatalError("\"gs_instruments.dls\" file not found.")
+        }
+        
+        do {
+            try self.midiPlayer = AVMIDIPlayer(contentsOf: midiFileURL, soundBankURL: bankURL)
+            print("created midi player with sound bank url \(bankURL)")
+        } catch let error as NSError {
+            print("Error \(error.localizedDescription)")
+        }
+        
+        self.midiPlayer.prepareToPlay()
+    }
+    
+    func play() {
+        //startTimer()
+        self.midiPlayer.play({
+            print("finished")
+            self.midiPlayer.currentPosition = 0
+           // self.timer?.invalidate()
+        })
+    }
+    
+    func getEmotions(){
+        for i in 0..<emotionData.count{
+            print(emotionData[i])
+        }
+
+    }
+    func recognizePicture(){
+        let analyzeImage = CognitiveServices.sharedInstance.analyzeImage
+        
+        let visualFeatures: [AnalyzeImage.AnalyzeImageVisualFeatures] = [.Categories, .Description, .Faces, .ImageType, .Color, .Adult]
+        let requestObject: AnalyzeImageRequestObject = ( picture.image!, visualFeatures)
+        
+        try! analyzeImage.analyzeImageWithRequestObject(requestObject, completion: { (response) in
+            print("before cat")
+           // print(response.)
+            print("after cat")
+            DispatchQueue.main.async(execute: {
+                //self.textView.text = response?.descriptionText
+                
+                print(response?.categories)
+
+
+ 
+
+
+            })
+        })
+        
+       // print(emotionData[0])
+    }
+    
+    func getRidOfRepeatedEmotions() -> Array<String>{
+        var noRepEmotions = [String]()
+        //var counter = 0
+        for i in 0..<emotionData.count{
+            for k in 0..<emotionData.count{
+                if emotionData[i] == emotionData[k]{
+                    noRepEmotions.append(emotionData[i])
+                    break;
+                }else if k == emotionData.count - 1{
+                    noRepEmotions.append(emotionData[i])
+                }
+            }
+            
+        }
+        
+        return noRepEmotions
     }
 
->>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -185,7 +288,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-<<<<<<< HEAD
+        
+   /*     self.socket.connect()
+        
+        self.socket.on("connect") {data, ack in
+            print("socket connected")
+            self.socket.emit("test", "hello")
+            
+            
+        }
+        
+        socket.on("currentAmount") {data, ack in
+            if let cur = data[0] as? Double {
+                self.socket.emitWithAck("canUpdate", cur)(0) {data in
+                    self.socket.emit("update", ["amount": cur + 2.50])
+                }
+                
+                ack.with("Got your currentAmount", "dude")
+            }
+        }
+        */
+
+        
+        
+        //previewLayer?.frame = cameraView.bounds
         captureLayer?.frame = cameraView.bounds
     }
     
@@ -193,18 +319,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         /*let backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-=======
+
         previewLayer?.frame = cameraView.bounds
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+     /*
         captureSession = AVCaptureSession()
         captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
         
         var backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
->>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
+
         
         // var error : NSError?
         var input: AVCaptureDeviceInput?
@@ -223,11 +350,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                 previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
-<<<<<<< HEAD
                 cameraView.layer.insertSublayer(previewLayer!, at: 0)
-=======
                 cameraView.layer.addSublayer(previewLayer!)
->>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
+
                 captureSession?.startRunning()
             }
             
@@ -235,7 +360,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
             
         } catch let error {
             print(error)
-<<<<<<< HEAD
+
         }*/
         
     }
@@ -296,10 +421,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
         //        print(AVAudioSession.sharedInstance().category)
         //        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
         //        print(AVAudioSession.sharedInstance().category)
-=======
+
         }
-        
->>>>>>> 376e475d79ba25ce0c33d32222cdfc0c8dce6e27
+
+        */
+
     }
 
 }
