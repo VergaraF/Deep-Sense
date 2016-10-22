@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D85254801DBB5D3300E2684D /* john.mid in Resources */ = {isa = PBXBuildFile; fileRef = D852547F1DBB5D3300E2684D /* john.mid */; };
+		D85254841DBB639D00E2684D /* gs_instruments.dls in Resources */ = {isa = PBXBuildFile; fileRef = D85254831DBB639D00E2684D /* gs_instruments.dls */; };
 		D88D527C1DBAED8400ED0974 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88D527B1DBAED8400ED0974 /* AppDelegate.swift */; };
 		D88D527E1DBAED8400ED0974 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88D527D1DBAED8400ED0974 /* ViewController.swift */; };
 		D88D52811DBAED8400ED0974 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D88D527F1DBAED8400ED0974 /* Main.storyboard */; };
@@ -29,7 +30,8 @@
 
 /* Begin PBXFileReference section */
 		D852547F1DBB5D3300E2684D /* john.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = john.mid; sourceTree = "<group>"; };
-		D85254811DBB5D6A00E2684D /* Fury.dls */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fury.dls; sourceTree = "<group>"; };
+		D85254821DBB628500E2684D /* fury.dls */ = {isa = PBXFileReference; lastKnownFileType = file; path = fury.dls; sourceTree = "<group>"; };
+		D85254831DBB639D00E2684D /* gs_instruments.dls */ = {isa = PBXFileReference; lastKnownFileType = file; path = gs_instruments.dls; sourceTree = "<group>"; };
 		D88D52781DBAED8400ED0974 /* Deep Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Deep Sense.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D88D527B1DBAED8400ED0974 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D88D527D1DBAED8400ED0974 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,8 +84,9 @@
 			isa = PBXGroup;
 			children = (
 				D852547F1DBB5D3300E2684D /* john.mid */,
-				D85254811DBB5D6A00E2684D /* Fury.dls */,
+				D85254831DBB639D00E2684D /* gs_instruments.dls */,
 				D8D3AC2A1DBB126700BC2F01 /* smile_people.jpg */,
+				D85254821DBB628500E2684D /* fury.dls */,
 				D8D3AC2E1DBB1BEB00BC2F01 /* fear_6.jpg */,
 				D8D3AC2C1DBB1B7300BC2F01 /* FEAR.jpg */,
 				D8A270C11DBB090200BD8DCC /* SDK */,
@@ -197,6 +200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D85254841DBB639D00E2684D /* gs_instruments.dls in Resources */,
 				D8D3AC2F1DBB1BEB00BC2F01 /* fear_6.jpg in Resources */,
 				D88D52861DBAED8400ED0974 /* LaunchScreen.storyboard in Resources */,
 				D8D3AC2B1DBB126700BC2F01 /* smile_people.jpg in Resources */,

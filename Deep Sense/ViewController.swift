@@ -24,34 +24,53 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
     
     var timer : Timer?
     
+    var midiPlayer:AVMIDIPlayer!
+    
+   
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         timer = Timer.scheduledTimer(timeInterval: 7, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
       
+        createAVMIDIPlayerFromMIDIFIleDLS()
 
         recognizePicture()
+        
+        play()
     }
-    /*
+    
     func createAVMIDIPlayerFromMIDIFIleDLS() {
         
+        //Get midi online
         guard let midiFileURL = Bundle.main.url(forResource: "john", withExtension: "mid") else {
             fatalError("\"john.mid\" file not found.")
         }
         
-        guard let bankURL = Bundle.main.url(forResource: "Fury", withExtension: "dls") else {
+        guard let bankURL = Bundle.main.url(forResource: "gs_instruments", withExtension: "dls") else {
             fatalError("\"gs_instruments.dls\" file not found.")
         }
         
         do {
-            try self.midiPlayer = AVMIDIPlayer(contentsOfURL: midiFileURL, soundBankURL: bankURL)
+            try self.midiPlayer = AVMIDIPlayer(contentsOf: midiFileURL, soundBankURL: bankURL)
             print("created midi player with sound bank url \(bankURL)")
         } catch let error as NSError {
             print("Error \(error.localizedDescription)")
         }
         
         self.midiPlayer.prepareToPlay()
-    }*/
+    }
+    
+    func play() {
+        //startTimer()
+        self.midiPlayer.play({
+            print("finished")
+            self.midiPlayer.currentPosition = 0
+           // self.timer?.invalidate()
+        })
+    }
     
     func getEmotions(){
         for i in 0..<emotionData.count{
