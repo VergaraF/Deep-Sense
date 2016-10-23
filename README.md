@@ -5,3 +5,4 @@ Languages, Resources, APIs : 1. Python 2. Swift 3. Microsoft Cognitive Services 
 
 Concepts implemented : 1. Recurrent Neural Nets (for poem generation) 2. Restricted Boltzmann Machines (for music generation)
 
+# Related to the iOS app: If you want  to see the latest version in development, please check the development-latest branch. Otherwise, you will be looking at an older version.
