@@ -44,7 +44,6 @@ extension String.UTF8View {
 
 var emotionData = [String]()
 
-
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var cameraView: UIView!
@@ -72,9 +71,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let movieDataOutput = AVCaptureVideoDataOutput()
     var oneTap = UITapGestureRecognizer()
     //var doubleTap = UITapGestureRecognizer()
-    
     let cognitiveServices = CognitiveServices.sharedInstance
-    var tags = [String]()
     
     @IBOutlet var authorsView: UIView!
     var timer : Timer?
@@ -100,7 +97,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         poemLabel.layer.shadowOpacity = 0.4
         poemLabel.textAlignment = .center
         poemLabel.numberOfLines = 25
-        poemLabel.text = "Lorem ipsum dolor \nsit amet, consectetur adipiscing elit. Morbi eu ultricies nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse rutrum quam ac est dignissim condimentum. Nullam consectetur dictum leo sit amet lacinia. Nulla suscipit tincidunt elementum. Maecenas erat orci, vehicula in risus id, hendrerit pulvinar libero. Aenean aliquam dignissim metus, sed ultrices mi egestas eget. Praesent hendrerit metus nunc. In vulputate sem sit amet nunc auctor cursus. Duis aliquam erat at euismod commodo. Donec a metus finibus, varius ante quis, vulputate arcu. Mauris finibus, justo sit amet finibus consequat, dui felis iaculis arcu, et luctus sapien magna tristique nunc. Etiam accumsan, felis ac sagittis venenatis, metus leo gravida turpis, nec elementum odio quam a quam. Maecenas viverra nulla eget malesuada eleifend."
+        poemLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu ultricies nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse rutrum quam ac est dignissim condimentum. Nullam consectetur dictum leo sit amet lacinia. Nulla suscipit tincidunt elementum. Maecenas erat orci, vehicula in risus id, hendrerit pulvinar libero. Aenean aliquam dignissim metus, sed ultrices mi egestas eget. Praesent hendrerit metus nunc. In vulputate sem sit amet nunc auctor cursus. Duis aliquam erat at euismod commodo. Donec a metus finibus, varius ante quis, vulputate arcu. Mauris finibus, justo sit amet finibus consequat, dui felis iaculis arcu, et luctus sapien magna tristique nunc. Etiam accumsan, felis ac sagittis venenatis, metus leo gravida turpis, nec elementum odio quam a quam. Maecenas viverra nulla eget malesuada eleifend."
         poemScroll.addSubview(poemLabel)
         poemScroll.contentSize = CGSize(width: 0, height: self.view.frame.size.height*2)
         oneTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.takeApic))
@@ -211,31 +208,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func authorsClicked(_ sender: AnyObject) {
         UIView.animate(withDuration: 0.4, animations: {
-            
-            Alamofire.request("http://10.251.202.68:5000/dad/\(self.tags[0])%20\(emotionData[0])%20\(self.tags[1])/\(sender.tag!)").response { response in
+            Alamofire.request("http://10.251.202.68:5000/dad/\(emotionData[0])/\(sender.tag!)").response { response in
                 print("Request: \(response.request)")
                 print("Response: \(response.response)")
                 print("Error: \(response.error)")
                 
-                
-                
                 if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    let poem = utf8Text.replacingOccurrences(of: "\\u00a0", with: "\t")
-                    var newString = poem.replacingOccurrences(of: "\\n", with: "\n")
-                    let r = newString.index(newString.startIndex, offsetBy: 1)..<newString.endIndex
-                    
-                    // Access substring from range.
-                    var result = newString[r]
-                   // result = result.trimmingCharacters(in: .whitespaces)
-                    print(result)
-                    var trimmed = result.trimmingCharacters(in: .whitespacesAndNewlines)
-                   self.poemLabel.lineBreakMode = NSLineBreakMode.byCharWrapping
-                    print(trimmed)
-                    trimmed.insert("\"", at: trimmed.startIndex)
-                    self.poemLabel.text = "\(trimmed)"
+                    let finalPoem = utf8Text.replacingOccurrences(of: "/\n", with: "")
+                    self.poemLabel.lineBreakMode = NSLineBreakMode.byCharWrapping
+                    self.poemLabel.text = "\(finalPoem)"
                     print("Data: \(utf8Text)")
                 }
-                self.play()
             }
             self.authorsView.alpha = 0
         })
@@ -267,10 +250,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         prevImg.animationDuration = 0.5
         prevImg.startAnimating();
         //UIImage(data: imageData!)!
-       
+        timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
 
         recognizePicture()
-         timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
 
     }
     
@@ -296,9 +278,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     var newEncoded = ""
-    func createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : Int) {
+    func createAVMIDIPlayerFromMIDIFIleDLS() {
         
-        Alamofire.request("http://10.251.194.99:5000/midi/\(audioNumber)").response { response in
+        Alamofire.request("http://10.251.194.99:5000/midi/1").response { response in
             print("request: \(response.request)")
             print("response: \(response.response)")
             print("errors: \(response.error)")
@@ -319,7 +301,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     print("Error \(error.localizedDescription)")
                 }
                 self.midiPlayer.prepareToPlay()
-                
+                self.play()
                 //properString = result
 
             }
@@ -346,20 +328,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func getEmotions(){
         emotionData = getRidOfRepeatedEmotions()
-        if emotionData.count > 0{
-            print("Emotions detected")
-            for i in 0..<emotionData.count{
-                print(emotionData[i])
-                createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : i)
-            }
-
-        }else{
-            print("Emotion DATA is EMPYT")
-            emotionData.append("suspense")
-            createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : 1)
+        for i in 0..<emotionData.count{
+            print(emotionData[i])
         }
-        
-        
+
     }
     func recognizePicture(){
         let analyzeImage = CognitiveServices.sharedInstance.analyzeImage
@@ -368,17 +340,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let requestObject: AnalyzeImageRequestObject = ( UIImage(data: imagesArray[0]), visualFeatures)
         
         try! analyzeImage.analyzeImageWithRequestObject(requestObject, completion: { (response) in
+            print("before cat")
+           // print(response.)
+            print("after cat")
             DispatchQueue.main.async(execute: {
                 //self.textView.text = response?.descriptionText
                 
                 print(response?.categories)
-                for i in 0..<2{
-                    self.tags.append((response?.tags?[i])!)
-                }
+                
+
+
+ 
+
+
             })
         })
         
-               // print(emotionData[0])
+       // print(emotionData[0])
     }
     
     func getRidOfRepeatedEmotions() -> Array<String>{
