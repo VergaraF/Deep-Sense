@@ -12,8 +12,38 @@ import Alamofire
 
 
 
+import UIKit
+
+extension String {
+    
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+        
+        return String(data: data, encoding: .utf8)
+    }
+    
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
+}
+
+extension Collection where Iterator.Element == UInt8 {
+    
+    var data: Data { return Data(bytes: Array(self)) }
+    
+    var string: String { return String(data: data, encoding: .utf8) ?? "" }
+}
+
+extension String.UTF8View {
+    
+    var array: [UInt8] { return Array(self) }
+    
+}
 
 var emotionData = [String]()
+
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -33,22 +63,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var takePic = true
     @IBOutlet var poemScroll: UIScrollView!
     @IBOutlet var prevView: UIView!
+    @IBOutlet var shakespeare: UIButton!
+    @IBOutlet var eliot: UIButton!
+    @IBOutlet var frost: UIButton!
     @IBOutlet var prevImg: UIImageView!
     var poemLabel = UILabel()
     let movieFileOutput = AVCaptureMovieFileOutput()
     let movieDataOutput = AVCaptureVideoDataOutput()
     var oneTap = UITapGestureRecognizer()
     //var doubleTap = UITapGestureRecognizer()
-    let cognitiveServices = CognitiveServices.sharedInstance
     
+    let cognitiveServices = CognitiveServices.sharedInstance
+    var tags = [String]()
+    
+    @IBOutlet var authorsView: UIView!
     var timer : Timer?
     
     var midiPlayer:AVMIDIPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
- 		timer = Timer.scheduledTimer(timeInterval: 7, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
+
         addVideoCamera()
+        addParallaxToView(vw: shakespeare)
+        addParallaxToView(vw: eliot)
+        addParallaxToView(vw: frost)
         poemLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2, y: self.view.frame.size.height, width: self.view.frame.size.width, height: self.view.frame.size.height))
         poemLabel.center = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height*1.5)
         poemScroll.isPagingEnabled = true
@@ -61,7 +100,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         poemLabel.layer.shadowOpacity = 0.4
         poemLabel.textAlignment = .center
         poemLabel.numberOfLines = 25
-        poemLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu ultricies nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse rutrum quam ac est dignissim condimentum. Nullam consectetur dictum leo sit amet lacinia. Nulla suscipit tincidunt elementum. Maecenas erat orci, vehicula in risus id, hendrerit pulvinar libero. Aenean aliquam dignissim metus, sed ultrices mi egestas eget. Praesent hendrerit metus nunc. In vulputate sem sit amet nunc auctor cursus. Duis aliquam erat at euismod commodo. Donec a metus finibus, varius ante quis, vulputate arcu. Mauris finibus, justo sit amet finibus consequat, dui felis iaculis arcu, et luctus sapien magna tristique nunc. Etiam accumsan, felis ac sagittis venenatis, metus leo gravida turpis, nec elementum odio quam a quam. Maecenas viverra nulla eget malesuada eleifend."
+        poemLabel.text = "Lorem ipsum dolor \nsit amet, consectetur adipiscing elit. Morbi eu ultricies nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse rutrum quam ac est dignissim condimentum. Nullam consectetur dictum leo sit amet lacinia. Nulla suscipit tincidunt elementum. Maecenas erat orci, vehicula in risus id, hendrerit pulvinar libero. Aenean aliquam dignissim metus, sed ultrices mi egestas eget. Praesent hendrerit metus nunc. In vulputate sem sit amet nunc auctor cursus. Duis aliquam erat at euismod commodo. Donec a metus finibus, varius ante quis, vulputate arcu. Mauris finibus, justo sit amet finibus consequat, dui felis iaculis arcu, et luctus sapien magna tristique nunc. Etiam accumsan, felis ac sagittis venenatis, metus leo gravida turpis, nec elementum odio quam a quam. Maecenas viverra nulla eget malesuada eleifend."
         poemScroll.addSubview(poemLabel)
         poemScroll.contentSize = CGSize(width: 0, height: self.view.frame.size.height*2)
         oneTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.takeApic))
@@ -73,11 +112,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //self.view.addGestureRecognizer(doubleTap)
 
 
-        createAVMIDIPlayerFromMIDIFIleDLS()
+        //createAVMIDIPlayerFromMIDIFIleDLS()
 
-        recognizePicture()
         
-        play()
     }
 
     
@@ -102,6 +139,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         print(img)
         oneTap.isEnabled = false
         prevImg.image = img
+        UIView.animate(withDuration: 0.4, animations: {
+            self.authorsView.alpha = 1
+            self.prevView.alpha = 1
+        })
+        
         prevView.alpha = 1
         imagePicker.dismiss(animated: true, completion: nil)
     }
@@ -125,6 +167,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func takeApic(){
         if takePic {
+            emotionData.removeAll()
             flipBtn.isEnabled = false
             galleryBtn.isEnabled = false
             takePic = false
@@ -139,6 +182,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                         self.prevView.alpha = 1
                     })
                     if i == 9 {
+                        UIView.animate(withDuration: 0.4, animations: {
+                            self.authorsView.alpha = 1
+                            self.prevView.alpha = 1
+                        })
+                        let pulseAni = CABasicAnimation(keyPath: "transform.scale")
+                        pulseAni.duration = 0.6
+                        pulseAni.fromValue = 0
+                        pulseAni.toValue = 1.0
+                        pulseAni.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                        pulseAni.autoreverses = false
+                        pulseAni.repeatCount = 0
+                        self.shakespeare.layer.add(pulseAni, forKey: nil)
+                        self.frost.layer.add(pulseAni, forKey: nil)
+                        self.eliot.layer.add(pulseAni, forKey: nil)
                         self.loopImg()
                     }
                     //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData!)!, nil, nil, nil)
@@ -149,16 +206,72 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         }
 
+
+    }
+    
+    @IBAction func authorsClicked(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.4, animations: {
+            
+            Alamofire.request("http://10.251.202.68:5000/dad/\(self.tags[0])%20\(emotionData[0])%20\(self.tags[1])/\(sender.tag!)").response { response in
+                print("Request: \(response.request)")
+                print("Response: \(response.response)")
+                print("Error: \(response.error)")
+                
+                
+                
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    let poem = utf8Text.replacingOccurrences(of: "\\u00a0", with: "\t")
+                    var newString = poem.replacingOccurrences(of: "\\n", with: "\n")
+                    let r = newString.index(newString.startIndex, offsetBy: 1)..<newString.endIndex
+                    
+                    // Access substring from range.
+                    var result = newString[r]
+                   // result = result.trimmingCharacters(in: .whitespaces)
+                    print(result)
+                    var trimmed = result.trimmingCharacters(in: .whitespacesAndNewlines)
+                   self.poemLabel.lineBreakMode = NSLineBreakMode.byCharWrapping
+                    print(trimmed)
+                    trimmed.insert("\"", at: trimmed.startIndex)
+                    self.poemLabel.text = "\(trimmed)"
+                    print("Data: \(utf8Text)")
+                }
+                self.play()
+            }
+            self.authorsView.alpha = 0
+        })
+    }
+    
+    func addParallaxToView(vw: UIView) {
+        let amount = 100
+        
+        let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        horizontal.minimumRelativeValue = -amount
+        horizontal.maximumRelativeValue = amount
+        
+        let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+        vertical.minimumRelativeValue = -amount
+        vertical.maximumRelativeValue = amount
+        
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [horizontal, vertical]
+        vw.addMotionEffect(group)
     }
     
     func loopImg(){
         oneTap.isEnabled = false
+        let finalTXT = newEncoded.fromBase64()
         
+        print("NEW DATA: \(finalTXT?.fromBase64())")
         prevImg.image = UIImage(data: imagesArray[0])!
         prevImg.animationImages = [UIImage(data: imagesArray[0])!, UIImage(data: imagesArray[1])!, UIImage(data: imagesArray[2])!, UIImage(data: imagesArray[3])!, UIImage(data: imagesArray[4])!, UIImage(data: imagesArray[5])!, UIImage(data: imagesArray[6])!, UIImage(data: imagesArray[7])!, UIImage(data: imagesArray[8])!, UIImage(data: imagesArray[9])!]
         prevImg.animationDuration = 0.5
         prevImg.startAnimating();
         //UIImage(data: imageData!)!
+       
+
+        recognizePicture()
+         timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(ViewController.getEmotions), userInfo: nil, repeats: false)
+
     }
     
     func flipit(){
@@ -182,45 +295,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
 
-    
-    func createAVMIDIPlayerFromMIDIFIleDLS() {
-   /*     Alamofire.request("http://10.251.202.166:5000/song.mid").response { response in
-            print("Request: \(response.request)")
-            print("Response: \(response.response)")
-            print("Error: \(response.error)")
-            
-            print(response.data)
-            print("MIDI File")
-            
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)")
-                
-                
-            }
-        }*/
-        //Get midi online
+    var newEncoded = ""
+    func createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : Int) {
         
-        
+        Alamofire.request("http://10.251.194.99:5000/midi/\(audioNumber)").response { response in
+            print("request: \(response.request)")
+            print("response: \(response.response)")
+            print("errors: \(response.error)")
+            if let data = response.data, let utf8Text = String(data: data, encoding: String.Encoding.utf8) {
+                //stringByReplacingPercentEscapesUsingEncoding(String.Encoding.utf8)!
+           //     let bytes = utf8Text.utf8.array
+               // let result = bytes.string
+                let finalTxt = utf8Text.replacingOccurrences(of: "\"", with: "")
+                print("FINAL TEXT:\(finalTxt)")
+                let decoded = NSData(base64Encoded: "\(finalTxt)", options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                guard let bankURL = Bundle.main.url(forResource: "gs_instruments", withExtension: "dls") else {
+                    fatalError("\"gs_instruments.dls\" file not found.")
+                }
+                do{
+                    try self.midiPlayer = AVMIDIPlayer(data: decoded as! Data, soundBankURL: bankURL)
+                    print("created midi player with sound bank url \(bankURL)")
+                } catch let error as NSError {
+                    print("Error \(error.localizedDescription)")
+                }
+                self.midiPlayer.prepareToPlay()
+                
+                //properString = result
 
-        
-    
-        guard let midiFileURL = Bundle.main.url(forResource: "john", withExtension: "mid") else {
-            fatalError("\"john.mid\" file not found.")
+            }
+//            if let data = response.data{
+//                var stringData = String(describing: response.data) + ""
+//                print(stringData)
+//            }
+            
         }
-        
-        guard let bankURL = Bundle.main.url(forResource: "gs_instruments", withExtension: "dls") else {
-            fatalError("\"gs_instruments.dls\" file not found.")
-        }
-        
-        do {
-            try self.midiPlayer = AVMIDIPlayer(contentsOf: midiFileURL, soundBankURL: bankURL)
-            print("created midi player with sound bank url \(bankURL)")
-        } catch let error as NSError {
-            print("Error \(error.localizedDescription)")
-        }
-        
-        self.midiPlayer.prepareToPlay()
+
+
     }
+
+    
     
     func play() {
         //startTimer()
@@ -232,34 +345,40 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func getEmotions(){
-        for i in 0..<emotionData.count{
-            print(emotionData[i])
-        }
+        emotionData = getRidOfRepeatedEmotions()
+        if emotionData.count > 0{
+            print("Emotions detected")
+            for i in 0..<emotionData.count{
+                print(emotionData[i])
+                createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : i)
+            }
 
+        }else{
+            print("Emotion DATA is EMPYT")
+            emotionData.append("suspense")
+            createAVMIDIPlayerFromMIDIFIleDLS(audioNumber : 1)
+        }
+        
+        
     }
     func recognizePicture(){
         let analyzeImage = CognitiveServices.sharedInstance.analyzeImage
         
         let visualFeatures: [AnalyzeImage.AnalyzeImageVisualFeatures] = [.Categories, .Description, .Faces, .ImageType, .Color, .Adult]
-        let requestObject: AnalyzeImageRequestObject = ( picture.image!, visualFeatures)
+        let requestObject: AnalyzeImageRequestObject = ( UIImage(data: imagesArray[0]), visualFeatures)
         
         try! analyzeImage.analyzeImageWithRequestObject(requestObject, completion: { (response) in
-            print("before cat")
-           // print(response.)
-            print("after cat")
             DispatchQueue.main.async(execute: {
                 //self.textView.text = response?.descriptionText
                 
                 print(response?.categories)
-
-
- 
-
-
+                for i in 0..<2{
+                    self.tags.append((response?.tags?[i])!)
+                }
             })
         })
         
-       // print(emotionData[0])
+               // print(emotionData[0])
     }
     
     func getRidOfRepeatedEmotions() -> Array<String>{
@@ -267,7 +386,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //var counter = 0
         for i in 0..<emotionData.count{
             for k in 0..<emotionData.count{
-                if emotionData[i] == emotionData[k]{
+                if emotionData[i] == emotionData[k] && k != i{
                     noRepEmotions.append(emotionData[i])
                     break;
                 }else if k == emotionData.count - 1{
@@ -288,7 +407,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+    //createAVMIDIPlayerFromMIDIFIleDLS()
    /*     self.socket.connect()
         
         self.socket.on("connect") {data, ack in
@@ -318,52 +437,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        /*let backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-
-        previewLayer?.frame = cameraView.bounds
-
-    }
+      
+}
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-     /*
-        captureSession = AVCaptureSession()
-        captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
-        
-        var backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
 
-        
-        // var error : NSError?
-        var input: AVCaptureDeviceInput?
-        //   input = AVCaptureDeviceInput(device: backCamera) throws ->
-        
-        do {
-            input = try AVCaptureDeviceInput(device: backCamera)
-            captureSession?.addInput(input)
-            
-            stillImageOutput = AVCaptureStillImageOutput()
-            stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
-            
-            if (captureSession?.canAddOutput(stillImageOutput) != nil ){
-                captureSession?.addOutput(stillImageOutput)
-                
-                previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
-                previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
-                cameraView.layer.insertSublayer(previewLayer!, at: 0)
-                cameraView.layer.addSublayer(previewLayer!)
-
-                captureSession?.startRunning()
-            }
-            
-            //  var input = AVCaptureDeviceInput(device: backCamera)
-            
-        } catch let error {
-            print(error)
-
-        }*/
-        
-    }
     func addVideoCamera() {
         //        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
         //        try! AVAudioSession.sharedInstance().setActive(true)
@@ -424,9 +501,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         }
 
-        */
+ 
 
     }
 
-}
+
 

@@ -267,6 +267,7 @@ class AnalyzeImage: NSObject {
         if let categories = dict?["categories"] as? [[String : AnyObject]] {
             analyzeObject.categories = categories
             //analyzeObject.emot = "trust"
+            print(analyzeObject.categories)
         }
         
         var containsFaces = false
@@ -387,10 +388,7 @@ class AnalyzeImage: NSObject {
                 analyzeObject.rawDescriptionCaptions = captions
                 
                 analyzeObject.descriptionText = captions?["text"] as? String
-                
-                
-                //LOL
-               // analyzeObject.emot = "LOL"
+
             }
             
         }
