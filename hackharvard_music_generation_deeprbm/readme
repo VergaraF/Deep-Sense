@@ -1,0 +1,15 @@
+This is a deep stacked rbm used to create music from sentiments of images. 4 models are created:
+	1.Happy
+	2.Sad
+	3.Fear	
+	4.Suspense
+
+It also contains a REST API in Flask for sending and receiving data, expecially the MIDI files
+
+
+The deeprbm model is greatly inspired from the blog post at http://danshiebler.com/2016-08-10-musical-tensorflow-part-one-the-rbm/
+
+
+
+
+p1.py and rest.py are very important
